@@ -2,7 +2,6 @@
     Utilities for pandas dataframes
 """
 
-from v_palette import get_colors
 from v_crypt import Cipher
 
 import constants as c
