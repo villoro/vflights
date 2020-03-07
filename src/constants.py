@@ -1,0 +1,10 @@
+"""
+    Constants
+"""
+
+SECRET_ENV_VAR_NAME = "SECRET_EXPENSOR"
+
+VAR_DROPBOX_TOKEN = "DROPBOX_TOKEN_FLIGHTS"
+
+FILE_SECRETS = "secrets.yaml"
+FILE_FLIGHTS = "/data.xlsx"
