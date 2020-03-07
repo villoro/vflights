@@ -34,7 +34,7 @@ def get_filters():
                 {"label": "All", "value": "0"},
                 {"label": "No direct", "value": "-1"},
             ],
-            value="0",
+            value="1",
             inputStyle={"margin-left": "20px"},
         ),
         "Show flights from past": dcc.RadioItems(
@@ -75,22 +75,6 @@ def get_layout():
                 dark=True,
             ),
             dcc.Graph(id="plot_prices"),
-            dbc.Row(
-                [
-                    dbc.Col(dcc.Graph(id="plot_evolution")),
-                    dbc.Col(
-                        dcc.Graph(
-                            id="plot_temp",
-                            figure={
-                                "data": [
-                                    {"x": [1, 2, 3], "y": [1, 1, 2], "name": "x"},
-                                    {"x": [1, 2, 3], "y": [1, 2, 8], "name": "y"},
-                                ],
-                                "layout": {"title": "Dash Data Visualization"},
-                            },
-                        )
-                    ),
-                ]
-            ),
+            dbc.Row([dbc.Col(dcc.Graph(id="plot_evolution")), dbc.Col(dcc.Graph(id="plot_temp"))]),
         ]
     )

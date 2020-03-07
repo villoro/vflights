@@ -18,7 +18,7 @@ def prices(origin, dest, direct, past, carriers=None, max_price=None):
     # Drop duplicates and plot
     df = df.sort_values("Quote_date", ascending=False).drop_duplicates(["Date"])
     fig = px.bar(
-        df, x="Date", y="Price", color="Carrier", title="Price for flights based on flying date"
+        df, x="Date", y="Price", color="Carrier", title=f"From {origin} to {dest} by flight date"
     )
     return fig.for_each_trace(lambda t: t.update(name=t.name.split("=")[1]))
 
@@ -37,7 +37,19 @@ def evolution(origin, dest, direct, day):
 
     # Drop duplicates and plot
     df = df.sort_values("Quote_date", ascending=False).drop_duplicates(["Inserted"])
-    fig = px.bar(
-        df, x="Inserted", y="Price", color="Carrier", title=f"Price evolution for {day:%Y/%m/%d}"
-    )
+
+    kwa = {
+        "x": "Inserted",
+        "y": "Price",
+        "color": "Carrier",
+        "title": f"Price evolution for {day:%Y/%m/%d}",
+    }
+
+    # One carrier do a line, else a bar plot by carrier
+    if len(df["Carrier"].unique()) == 1:
+        # In order to have natural lines sort by x axis
+        df = df.sort_values("Inserted", ascending=False)
+        return px.line(df, **kwa)
+
+    fig = px.bar(df, **kwa)
     return fig.for_each_trace(lambda t: t.update(name=t.name.split("=")[1]))
