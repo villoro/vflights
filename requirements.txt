@@ -3,8 +3,10 @@ dash_table==4.6.0
 dash-bootstrap-components==0.8.1
 dash-core-components==1.7.0
 dash-html-components==1.0.2
+dropbox==9.4.0
 gunicorn==20.0.4
+oyaml==0.9
 pandas==0.25.3
 plotly==4.4.1
-v_palette>=1.1.0
+v_crypt==1.0.4
 xlrd==1.2.0
