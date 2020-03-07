@@ -45,7 +45,7 @@ def prices(origin, dest, direct, past, carriers=None, max_price=None):
     return fig.for_each_trace(lambda t: t.update(name=t.name.split("=")[1]))
 
 
-def evolution(origin, dest, direct, day="2020-04-15"):
+def evolution(origin, dest, direct, day=datetime.now()):
     """ Plot evolution of a given day """
 
     df = fitler_df(origin, dest, direct, past=False)

@@ -42,14 +42,18 @@ def plot_prices(origin, dest, direct, past, carriers, max_price):
 
 
 @APP.callback(
-    Output("plot_evolution", "figure"), [Input(x, "value") for x in ["origin", "dest", "direct"]]
+    Output("plot_evolution", "figure"),
+    [Input(x, "value") for x in ["origin", "dest", "direct"]] + [Input("plot_prices", "clickData")],
 )
-def plot_evolution(origin, dest, direct):
+def plot_evolution(origin, dest, direct, click_data):
+
+    # Extract day from clicked point
+    day = None if click_data is None else click_data["points"][0]["x"]
 
     # Cast numbers
     direct = int(direct)
 
-    return plots.evolution(origin, dest, direct)
+    return plots.evolution(origin, dest, direct, day)
 
 
 if __name__ == "__main__":
