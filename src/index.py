@@ -15,6 +15,7 @@ APP = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
 APP.layout = get_layout()
+SERVER = APP.server
 
 
 @APP.callback(
