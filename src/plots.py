@@ -39,6 +39,20 @@ def prices(origin, dest, direct, past, carriers=None, max_price=None):
 
     df = fitler_df(origin, dest, direct, past, carriers, max_price)
 
-    df = df.sort_values("Inserted", ascending=False).drop_duplicates(["Date"])
+    df = df.sort_values("Quote_date", ascending=False).drop_duplicates(["Date"])
 
-    return px.bar(df, x="Date", y="Price", color="Carrier")
+    fig = px.bar(df, x="Date", y="Price", color="Carrier")
+    return fig.for_each_trace(lambda t: t.update(name=t.name.split("=")[1]))
+
+
+def evolution(origin, dest, direct, day="2020-04-15"):
+    """ Plot evolution of a given day """
+
+    df = fitler_df(origin, dest, direct, past=False)
+
+    df = df[pd.to_datetime(df["Date"]) == pd.to_datetime(day)]
+
+    df = df.sort_values("Quote_date", ascending=False).drop_duplicates(["Inserted"])
+
+    fig = px.bar(df, x="Inserted", y="Price", color="Carrier")
+    return fig.for_each_trace(lambda t: t.update(name=t.name.split("=")[1]))

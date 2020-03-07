@@ -80,23 +80,7 @@ def get_layout():
             dcc.Graph(id="plot_prices"),
             dbc.Row(
                 [
-                    dbc.Col(
-                        dcc.Graph(
-                            id="plot_evolution",
-                            figure={
-                                "data": [
-                                    {"x": [1, 2, 3], "y": [4, 1, 2], "type": "bar", "name": "SF"},
-                                    {
-                                        "x": [1, 2, 3],
-                                        "y": [2, 4, 5],
-                                        "type": "bar",
-                                        "name": "Montréal",
-                                    },
-                                ],
-                                "layout": {"title": "Dash Data Visualization"},
-                            },
-                        )
-                    ),
+                    dbc.Col(dcc.Graph(id="plot_evolution")),
                     dbc.Col(
                         dcc.Graph(
                             id="plot_temp",
