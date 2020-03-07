@@ -8,7 +8,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-from data_loader import DFG
+from data_loader import get_airports
 
 
 def get_options(iterable):
@@ -21,13 +21,12 @@ def get_options(iterable):
 def get_filters():
     """ Filters in the model callable from the nav bar """
 
-    airports = DFG["Origin"].unique().tolist()
-    carriers = DFG["Carrier"].unique().tolist()
+    airports = get_options(get_airports())
 
     # Use a dict with title and element
     filters = {
-        "Origin": dcc.Dropdown(id="origin", options=get_options(airports), value="CAG"),
-        "Destination": dcc.Dropdown(id="dest", options=get_options(airports), value="BCN"),
+        "Origin": dcc.Dropdown(id="origin", options=airports, value="CAG"),
+        "Destination": dcc.Dropdown(id="dest", options=airports, value="BCN"),
         "Direct flights": dcc.RadioItems(
             id="direct",
             options=[
@@ -38,15 +37,13 @@ def get_filters():
             value="0",
             inputStyle={"margin-left": "20px"},
         ),
-        "Carriers": dcc.Dropdown(
-            id="carriers", options=get_options(carriers), value=carriers, multi=True
-        ),
         "Show flights from past": dcc.RadioItems(
             id="past",
             options=[{"label": "Yes", "value": "1"}, {"label": "No", "value": "0"}],
             value="0",
             inputStyle={"margin-left": "20px"},
         ),
+        "Carriers": dcc.Dropdown(id="carriers", multi=True),
         "Max price": dcc.Input(
             id="max_price", placeholder="Enter max price...", type="number", min=0
         ),

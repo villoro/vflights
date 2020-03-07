@@ -11,6 +11,7 @@
 """
 
 import io
+from datetime import datetime
 
 import dropbox
 import pandas as pd
@@ -38,3 +39,41 @@ def sync():
 
 # Do one sync when it is imported!
 sync()
+
+
+def fitler_df(origin, dest, direct, past, carriers=None, max_price=None):
+    """ Generic function to filter a dataframe """
+
+    df = DFG[(DFG["Origin"] == origin) & (DFG["Destination"] == dest)].copy()
+
+    if carriers is not None:
+        df = df[df["Carrier"].isin(carriers)]
+
+    if not bool(int(past)):
+        df = df[pd.to_datetime(df["Date"]) > datetime.now()]
+
+    # If positive asking for direct flights
+    if int(direct) > 0:
+        df = df[df["Direct"]]
+
+    # If negative asking for non direct flights
+    if int(direct) < 0:
+        df = df[~df["Direct"]]
+
+    if max_price is not None:
+        df = df[df["Price"] < max_price]
+
+    return df
+
+
+def get_carriers(origin, dest, direct, past):
+    """ Get list of possible carriers """
+
+    df = fitler_df(origin, dest, direct, past)
+    return df["Carrier"].unique().tolist()
+
+
+def get_airports():
+    """ Get list of possible airports """
+
+    return DFG["Origin"].unique().tolist()
