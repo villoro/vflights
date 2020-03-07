@@ -47,6 +47,9 @@ def get_filters():
             value="0",
             inputStyle={"margin-left": "20px"},
         ),
+        "Max price": dcc.Input(
+            id="max_price", placeholder="Enter max price...", type="number", min=0
+        ),
     }
 
     # Concat all titles, elements and spacers

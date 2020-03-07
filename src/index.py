@@ -30,21 +30,15 @@ def toggle_modal(n1, n2, is_open):
 
 @APP.callback(
     Output("plot_prices", "figure"),
-    [
-        Input("origin", "value"),
-        Input("dest", "value"),
-        Input("direct", "value"),
-        Input("carriers", "value"),
-        Input("past", "value"),
-    ],
+    [Input(x, "value") for x in ["origin", "dest", "direct", "past", "carriers", "max_price"]],
 )
-def toggle_modal(origin, dest, direct, carriers, past):
+def toggle_modal(origin, dest, direct, past, carriers, max_price):
 
     # Cast numbers
     direct = int(direct)
     past = bool(int(past))
 
-    return plots.prices(origin, dest, direct, carriers, past)
+    return plots.prices(origin, dest, direct, past, carriers, max_price)
 
 
 if __name__ == "__main__":
